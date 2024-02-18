@@ -31,6 +31,8 @@ public class TabProviderRegistry {
             InventoryTabs.id("simple_block_tab_provider"), new SimpleBlockTabProvider());
     public static final ChestTabProvider CHEST_TAB_PROVIDER = (ChestTabProvider) register(
             InventoryTabs.id("chest_tab_provider"), new ChestTabProvider());
+    public static final BarrelTabProvider BARREL_TAB_PROVIDER = (BarrelTabProvider) register(
+            InventoryTabs.id("barrel_tab_provider"), new BarrelTabProvider());
     public static final EnderChestTabProvider ENDER_CHEST_TAB_PROVIDER = (EnderChestTabProvider) register(
             InventoryTabs.id("ender_chest_tab_provider"), new EnderChestTabProvider());
     public static final ShulkerBoxTabProvider SHULKER_BOX_TAB_PROVIDER = (ShulkerBoxTabProvider) register(
@@ -61,7 +63,11 @@ public class TabProviderRegistry {
             if (block instanceof BlockEntityProvider) {
                 if (block instanceof AbstractChestBlock) {
                     registerChest(block);
-                } else if (!(block instanceof AbstractBannerBlock) && !(block instanceof AbstractSignBlock) && !(block instanceof AbstractSkullBlock) && !(block instanceof BeehiveBlock) && !(block instanceof BedBlock) && !(block instanceof BellBlock) && !(block instanceof CampfireBlock) && !(block instanceof CommandBlock) && !(block instanceof ComparatorBlock) && !(block instanceof ConduitBlock) && !(block instanceof DaylightDetectorBlock) && !(block instanceof EndGatewayBlock) && !(block instanceof EndPortalBlock) && !(block instanceof JigsawBlock) && !(block instanceof JukeboxBlock) && !(block instanceof PistonExtensionBlock) && !(block instanceof SculkSensorBlock) && !(block instanceof SpawnerBlock) && !(block instanceof StructureBlock)) {
+                } 
+                else if (block instanceof BarrelBlock) {
+                    registerBarrel(block);
+                }
+                else if (!(block instanceof AbstractBannerBlock) && !(block instanceof AbstractSignBlock) && !(block instanceof AbstractSkullBlock) && !(block instanceof BeehiveBlock) && !(block instanceof BedBlock) && !(block instanceof BellBlock) && !(block instanceof CampfireBlock) && !(block instanceof CommandBlock) && !(block instanceof ComparatorBlock) && !(block instanceof ConduitBlock) && !(block instanceof DaylightDetectorBlock) && !(block instanceof EndGatewayBlock) && !(block instanceof EndPortalBlock) && !(block instanceof JigsawBlock) && !(block instanceof JukeboxBlock) && !(block instanceof PistonExtensionBlock) && !(block instanceof SculkSensorBlock) && !(block instanceof SpawnerBlock) && !(block instanceof StructureBlock)) {
                     registerSimpleBlock(block);
                 }
             } else if (block instanceof CraftingTableBlock && !(block instanceof FletchingTableBlock) || block instanceof AnvilBlock || block instanceof CartographyTableBlock || block instanceof GrindstoneBlock || block instanceof LoomBlock || block instanceof StonecutterBlock) {
@@ -174,6 +180,13 @@ public class TabProviderRegistry {
             LOGGER.info("Registering: " + block);
         }
         CHEST_TAB_PROVIDER.addChestBlock(block);
+    }
+
+    public static void registerBarrel(Block block) {
+        if (InventoryTabs.getConfig().debugEnabled) {
+            LOGGER.info("Registering: " + block);
+        }
+        BARREL_TAB_PROVIDER.addBarrelBlock(block);
     }
 
     public static void registerUniqueBlock(Block block) {
